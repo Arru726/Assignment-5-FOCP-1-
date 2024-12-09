@@ -1,0 +1,57 @@
+  void displayWord(char word[], char guessed[], int length) {
+  for (int i = 0; i < length; i++) {
+  if (guessed[i]) {
+  printf("%c ", word[i]);
+  } else {
+  printf("_ ");
+}
+}
+  printf("\n");
+}
+  int isWordComplete(char guessed[], int length) {
+  for (int i = 0; i < length; i++) {
+  if (!guessed[i]) {
+  return 0;
+}
+}
+  return 1;
+}
+  int main() {
+  char word[] = "passport";
+  int length = strlen(word);
+  char guessed[length];
+  memset(guessed, 0, sizeof(guessed));
+  int chances = 3;
+  char guess;
+  int correctGuess;
+  printf("Welcome to Hangman Game!\n");
+  printf("You have %d chances to guess the word.\n", chances);
+  while (chances > 0) {
+  printf("\nWord: ");
+  displayWord(word, guessed, length);
+  printf("Enter your guess (a single character): ");
+  scanf(" %c", &guess);
+  correctGuess = 0;
+  for (int i = 0; i < length; i++) {
+  if (word[i] == guess && !guessed[i]) {
+  guessed[i] = 1;
+  correctGuess = 1;
+  }
+  }
+  if (correctGuess) {
+  printf("Good job! '%c' is correct.\n", guess);
+  } else {
+  chances--;
+  printf("Sorry! '%c' is not in the word. You have %d chances left.\n",
+  guess, chances);
+  }
+  if (isWordComplete(guessed, length)) {
+  printf("\nCongratulations! You guessed the word: %s\n", word);
+  printf("The Man survives!\n");
+  return 0;
+  }
+  }
+  printf("\nYou lost! The word was: %s\n", word);
+  printf("The Man gets hanged!\n");
+  return 0;
+}
